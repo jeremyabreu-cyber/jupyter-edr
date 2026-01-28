@@ -1,301 +1,170 @@
-🚨 JupiterEDR
-An EDR-Style Detection & Alerting Lab Built in Jupyter
-
-JupiterEDR is a lightweight, analyst-driven Endpoint Detection & Response (EDR) simulation built using Jupyter notebooks.
-
-It reconstructs Windows process lineage, applies behavioral detection logic, maps activity to MITRE ATT&CK techniques, scores risk, and automatically generates case artifacts and Slack alerts — mimicking how modern EDR platforms operate behind the scenes.
-
-⚠️ Disclaimer
-
-All data shown in this repository is synthetic or lab-generated.
-
-Hostnames and usernames are not real
-
-Process events are simulated
-
-No production systems were used
-
-No real customer or organizational data is present
-
-This project exists solely for learning, demonstration, and portfolio purposes.
-
-🧠 What This Project Demonstrates
-
-This lab focuses on how detection systems think, not how attackers operate.
-
-Specifically, it demonstrates:
-
-Process lineage reconstruction (parent → child chains)
-
-Living-off-the-Land Binary (LOLBin) detection
-
-Office-spawned script execution (real phishing tradecraft)
-
-Risk scoring based on behavior, not signatures
-
-MITRE ATT&CK technique mapping
-
-Case-based alerting and artifact generation
-
-Automated analyst notifications via Slack
-
-This mirrors workflows found in platforms like:
-
-CrowdStrike Falcon
-
-Microsoft Defender for Endpoint
-
-SentinelOne
-
-Elastic Security
-
-🧰 Tools & Technologies Used
-
-Jupyter Notebook – interactive analysis and detection logic
-
-Python – data processing, scoring, alerting
-
-Pandas – event correlation and enrichment
-
-MITRE ATT&CK – behavioral technique mapping
-
-Slack Webhooks – automated analyst alerting
-
-CSV / JSON – case artifacts & reporting output
-
-🧪 Detection Pipeline (High-Level)
-
-Process Events Generated
-
-Simulated Windows process execution data
-
-Process Lineage Reconstruction
-
-Builds full parent-child chains (e.g.
-powershell.exe ← winword.exe ← explorer.exe)
-
-Behavioral Detection
-
-LOLBins (PowerShell, certutil, mshta, wscript)
-
-Suspicious command-line flags (-enc, -nop, URLs)
-
-Office → script execution chains
-
-Risk Scoring
-
-Each event receives a weighted score
-
-Severity assigned (Low / Medium / High / Critical)
-
-MITRE ATT&CK Mapping
-
-Techniques inferred from behavior and chain context
-
-Case Creation
-
-Events grouped into case folders (CASE-001, CASE-002, …)
-
-Per-severity CSVs generated
-
-Executive summary written
-
-File hashes created (chain-of-custody style)
-
-Slack Alerting
-
-Top high-risk cases sent as a single Slack message
-
-One message per run (not noisy, not spammy)
-
-📁 Output Structure
-
-Each run produces structured case artifacts:
-
-EDR_Labs_Output/
-└── CASE-001/
-    ├── critical_alerts.csv
-    ├── high_alerts.csv
-    ├── medium_alerts.csv
-    ├── edr_alerts_all.csv
-    ├── edr_alerts.json
-    ├── summary.txt
-    └── hashes.txt
-
-
-This mirrors how real IR teams preserve evidence and document findings.
-
-🔔 Slack Alerting (For the “Busy Analyst”)
-
-This lab includes optional Slack automation.
-
-If an analyst defines a webhook:
-
-Any event scoring ≥ 70 triggers an alert
-
-Only the top 3 highest-risk cases are sent
-
-One clean message per run
-
-Each Slack alert includes:
-
-Case ID
-
-Severity
-
-Host + User
-
-Risk Score
-
-MITRE Techniques
-
-Key detections
-
-Full process chain
-
-Recommended actions
-
-This simulates how detection platforms reduce noise while still escalating real risk.
-
-📸 Screenshots
-
-Screenshots in this repository illustrate:
-
-Process lineage reconstruction
-
-MITRE ATT&CK mapping logic
-
-Risk score distribution
-
-Case artifact generation
-
-Slack alert output
-
-Screenshots are intentionally curated to demonstrate analyst-level visibility, not step-by-step instructions.
-
-(See /screenshots directory.)
-
-🎯 Why This Matters
-
-This project shows:
-
-You understand how EDR detections are built
-
-You can reason about behavior, not just tools
-
-You think in terms of cases, alerts, and response
-
-You can automate analyst workflows
-
-You can explain security concepts clearly
-
-This is the difference between:
-
-“I used an EDR”
-and
-“I understand how an EDR works.”
-
-🚀 Future Enhancements
-
-Planned or easily extendable:
-
-Rule tuning & false-positive suppression
-
-Time-window correlation
-
-ATT&CK tactic rollups
-
-Detection confidence scoring
-
-SOAR-style response hooks
-
-## 📁 Output Structure
-
-Each execution produces structured, investigation-ready artifacts:
-EDR_Labs_Output/
-└── CASE-001/
-├── critical_alerts.csv
-├── high_alerts.csv
-├── medium_alerts.csv
-├── edr_alerts_all.csv
-├── edr_alerts.json
-├── summary.txt
-└── hashes.txt
-
-
-This mirrors real incident response workflows:
-- Evidence preservation
-- Severity-based triage
-- Executive summaries
-- Chain-of-custody style hashing
-
----
-
-## 🔔 Slack Alerting
-
-JupiterEDR includes optional Slack automation for analyst notification.
-
-When enabled:
-- Any event with a **score ≥ 70** is eligible for alerting
-- Only the **top 3 highest-risk cases** are sent
-- **One message per run** (no alert spam)
-
-Each Slack alert includes:
-- Case ID
-- Severity
-- Host and User
-- Risk Score
-- MITRE ATT&CK techniques
-- Detection signals
-- Full process execution chain
-- Recommended analyst actions
-
-This simulates how modern EDR platforms reduce noise while escalating real risk.
-
----
-
-## 📸 Screenshots
-
-Screenshots in this repository demonstrate:
-- Process lineage reconstruction
-- MITRE ATT&CK mapping logic
-- Risk score distribution
-- Case artifact generation
-- Slack alert output
-
-Screenshots are intentionally curated to show **analyst-level visibility**, not step-by-step instructions.
-
-(See the `screenshots/` directory.)
-
----
-
-## 🎯 Why This Project Matters
-
-This project demonstrates the ability to:
-
-- Think like a detection engineer, not just a tool user
-- Reason about behavior instead of relying on signatures
-- Build alerting logic that scales without noise
-- Automate analyst workflows
-- Communicate findings clearly and professionally
-
-It bridges the gap between:
-> “I used an EDR”  
-and  
-> **“I understand how an EDR works.”**
-
----
-
-## 🚀 Future Enhancements
-
-Potential extensions include:
-- Detection tuning and false-positive suppression
-- Time-window correlation
-- MITRE tactic-level aggregation
-- Confidence scoring
-- SOAR-style response actions
-
----
-
-**Author:** Jeremy Abreu  
-**Purpose:** Security engineering & detection portfolio project
+project:
+  name: JupiterEDR
+  tagline: "A Jupyter-based EDR detection, scoring, and alerting lab"
+  type: Security Engineering / Detection Engineering Lab
+  author: Jeremy Abreu
+
+disclaimer:
+  purpose: Educational and portfolio demonstration only
+  data:
+    - All hostnames are synthetic
+    - All usernames are synthetic
+    - All process execution data is simulated
+    - No production systems were used
+  privacy:
+    - No PII present
+    - No customer data
+    - No enterprise data
+  note: >
+    This project does not represent real incidents or environments and should
+    not be interpreted as operational telemetry.
+
+overview:
+  description: >
+    JupiterEDR is a lightweight Endpoint Detection & Response (EDR) simulation
+    built entirely in Jupyter notebooks. It reconstructs Windows process
+    execution lineage, applies behavioral detection heuristics, maps activity
+    to MITRE ATT&CK techniques, assigns risk scores, generates case artifacts,
+    and delivers automated Slack alerts.
+  philosophy:
+    - Behavior-based detection over signatures
+    - Analyst-first visibility
+    - Minimal noise, high signal
+    - Automation where it matters
+  platforms_mimicked:
+    - CrowdStrike Falcon
+    - Microsoft Defender for Endpoint
+    - SentinelOne
+    - Elastic Security
+
+objectives:
+  - Reconstruct parent-child process execution chains
+  - Detect Living-off-the-Land Binary (LOLBin) abuse
+  - Identify Office-spawned scripting behavior
+  - Apply risk-based scoring and severity classification
+  - Map detections to MITRE ATT&CK techniques
+  - Generate investigation-ready case artifacts
+  - Notify analysts via Slack without alert fatigue
+
+tools:
+  analysis:
+    - Python
+    - Pandas
+  environment:
+    - Jupyter Notebook
+  frameworks:
+    - MITRE ATT&CK
+  integrations:
+    - Slack Incoming Webhooks
+  output_formats:
+    - CSV
+    - JSON
+    - TXT
+
+detection_pipeline:
+  steps:
+    - name: Process Event Generation
+      description: Synthetic Windows process execution events
+    - name: Process Lineage Reconstruction
+      description: Parent-child execution chains rebuilt from PID/PPID
+    - name: Behavioral Detection
+      signals:
+        - LOLBins (powershell.exe, certutil.exe, mshta.exe, wscript.exe)
+        - Suspicious command-line flags (-enc, -nop, URLs)
+        - Office spawning script interpreters
+    - name: Risk Scoring
+      description: Numerical scoring with severity classification
+    - name: MITRE Mapping
+      description: Technique inference from execution behavior
+    - name: Case Creation
+      description: Events grouped into structured case folders
+    - name: Alerting
+      description: High-risk cases summarized and sent to Slack
+
+risk_scoring:
+  severity_levels:
+    - name: Low
+      score_range: "< 40"
+    - name: Medium
+      score_range: "40 - 59"
+    - name: High
+      score_range: "60 - 79"
+    - name: Critical
+      score_range: "80 - 100"
+
+mitre_mapping:
+  approach:
+    - Binary-based mapping
+    - Chain-based behavioral inference
+  example_techniques:
+    - T1059.001  # PowerShell
+    - T1059.003  # Windows Command Shell
+    - T1105      # Ingress Tool Transfer
+    - T1218.005  # Mshta
+    - T1566.001  # Phishing Attachment
+
+output_structure:
+  root: EDR_Labs_Output
+  cases:
+    structure:
+      - critical_alerts.csv
+      - high_alerts.csv
+      - medium_alerts.csv
+      - edr_alerts_all.csv
+      - edr_alerts.json
+      - summary.txt
+      - hashes.txt
+  purpose:
+    - Incident investigation
+    - Evidence preservation
+    - Severity-based triage
+    - Executive reporting
+    - Chain-of-custody style integrity
+
+slack_alerting:
+  enabled: true
+  threshold:
+    score_greater_equal: 70
+  behavior:
+    - One message per execution
+    - Top 3 highest-risk cases only
+    - No per-event spam
+  message_contents:
+    - Case ID
+    - Run time
+    - Severity
+    - Host and user
+    - Risk score
+    - MITRE ATT&CK techniques
+    - Detection signals
+    - Full process chain
+    - Recommended analyst actions
+
+screenshots:
+  intent: Analyst-level visibility
+  included:
+    - Process lineage reconstruction
+    - MITRE ATT&CK mapping
+    - Risk score distribution
+    - Case artifact folders
+    - Slack alert output
+  note: >
+    Screenshots are curated to demonstrate outcomes and analyst context,
+    not step-by-step instructions.
+
+career_relevance:
+  demonstrates:
+    - Detection engineering mindset
+    - Behavioral analysis
+    - Alert quality over quantity
+    - Automation of SOC workflows
+    - Clear communication of security findings
+  positioning: >
+    Bridges the gap between using an EDR and understanding how one works internally.
+
+future_work:
+  - Detection tuning and false-positive suppression
+  - Time-window correlation
+  - MITRE tactic-level aggregation
+  - Confidence scoring
+  - SOAR-style response actions
