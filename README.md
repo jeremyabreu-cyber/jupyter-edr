@@ -208,3 +208,94 @@ ATT&CK tactic rollups
 Detection confidence scoring
 
 SOAR-style response hooks
+
+## 📁 Output Structure
+
+Each execution produces structured, investigation-ready artifacts:
+EDR_Labs_Output/
+└── CASE-001/
+├── critical_alerts.csv
+├── high_alerts.csv
+├── medium_alerts.csv
+├── edr_alerts_all.csv
+├── edr_alerts.json
+├── summary.txt
+└── hashes.txt
+
+
+This mirrors real incident response workflows:
+- Evidence preservation
+- Severity-based triage
+- Executive summaries
+- Chain-of-custody style hashing
+
+---
+
+## 🔔 Slack Alerting
+
+JupiterEDR includes optional Slack automation for analyst notification.
+
+When enabled:
+- Any event with a **score ≥ 70** is eligible for alerting
+- Only the **top 3 highest-risk cases** are sent
+- **One message per run** (no alert spam)
+
+Each Slack alert includes:
+- Case ID
+- Severity
+- Host and User
+- Risk Score
+- MITRE ATT&CK techniques
+- Detection signals
+- Full process execution chain
+- Recommended analyst actions
+
+This simulates how modern EDR platforms reduce noise while escalating real risk.
+
+---
+
+## 📸 Screenshots
+
+Screenshots in this repository demonstrate:
+- Process lineage reconstruction
+- MITRE ATT&CK mapping logic
+- Risk score distribution
+- Case artifact generation
+- Slack alert output
+
+Screenshots are intentionally curated to show **analyst-level visibility**, not step-by-step instructions.
+
+(See the `screenshots/` directory.)
+
+---
+
+## 🎯 Why This Project Matters
+
+This project demonstrates the ability to:
+
+- Think like a detection engineer, not just a tool user
+- Reason about behavior instead of relying on signatures
+- Build alerting logic that scales without noise
+- Automate analyst workflows
+- Communicate findings clearly and professionally
+
+It bridges the gap between:
+> “I used an EDR”  
+and  
+> **“I understand how an EDR works.”**
+
+---
+
+## 🚀 Future Enhancements
+
+Potential extensions include:
+- Detection tuning and false-positive suppression
+- Time-window correlation
+- MITRE tactic-level aggregation
+- Confidence scoring
+- SOAR-style response actions
+
+---
+
+**Author:** Jeremy Abreu  
+**Purpose:** Security engineering & detection portfolio project
