@@ -1,1 +1,4 @@
-
+﻿timestamp,host,user,image_name,parent_name,severity,score,mitre_technique,alert_summary,recommendation,process_chain
+2026-01-27T14:32:10Z,WS-LAB-01,labuser,powershell.exe,winword.exe,Critical,100,T1059.001,PowerShell spawned from Office application,Isolate host and review full parent-child execution chain,powershell.exe <- winword.exe <- msedge.exe <- explorer.exe
+2026-01-27T14:32:15Z,WS-LAB-01,labuser,certutil.exe,cmd.exe,High,70,T1105,Certutil used for remote file transfer,Block URL and validate downloaded artifacts,certutil.exe <- cmd.exe <- explorer.exe
+2026-01-27T15:01:44Z,WS-LAB-02,labuser,mshta.exe,wscript.exe,Medium,60,T1218.005,Mshta execution via script proxy,Review script origin and inspect for lateral movement indicators,mshta.exe <- wscript.exe <- winword.exe <- explorer.exe
