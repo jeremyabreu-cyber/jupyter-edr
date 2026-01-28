@@ -1,97 +1,210 @@
-# Jupyter-EDR – Behavioral Detection & Slack Alerting
+🚨 JupiterEDR
+An EDR-Style Detection & Alerting Lab Built in Jupyter
 
-## Overview
+JupiterEDR is a lightweight, analyst-driven Endpoint Detection & Response (EDR) simulation built using Jupyter notebooks.
 
-Jupyter-EDR is a lightweight, behavior-based detection pipeline inspired by modern Endpoint Detection and Response (EDR) platforms.
+It reconstructs Windows process lineage, applies behavioral detection logic, maps activity to MITRE ATT&CK techniques, scores risk, and automatically generates case artifacts and Slack alerts — mimicking how modern EDR platforms operate behind the scenes.
 
-The project simulates endpoint process execution telemetry, reconstructs parent-child process lineage, applies heuristic risk scoring, maps activity to MITRE ATT&CK techniques, and delivers analyst-ready alerts to Slack.
+⚠️ Disclaimer
 
-This project focuses on **how detections are reasoned about, prioritized, and communicated**, rather than signature matching or endpoint enforcement.
+All data shown in this repository is synthetic or lab-generated.
 
----
+Hostnames and usernames are not real
 
-## What This Is Not
+Process events are simulated
 
-This project is **not** a full EDR agent.
+No production systems were used
 
-It does not perform kernel-level monitoring, real-time blocking, memory inspection, or endpoint isolation. The goal is to demonstrate how behavioral signals, process ancestry, and heuristic scoring can approximate EDR-style detections and SOC workflows.
+No real customer or organizational data is present
 
----
+This project exists solely for learning, demonstration, and portfolio purposes.
 
-## Tools & Platforms
+🧠 What This Project Demonstrates
 
-- **Python** – Detection logic, enrichment, scoring, and automation
-- **Jupyter Notebook** – Interactive detection engineering and analysis workspace, similar to how analysts prototype detections and hunt hypotheses
-- **Pandas** – Event processing, correlation, and enrichment
-- **MITRE ATT&CK** – Technique classification for detected behaviors
-- **Slack Webhooks** – SOC-style alert delivery and analyst notification
+This lab focuses on how detection systems think, not how attackers operate.
 
----
+Specifically, it demonstrates:
 
-## Detection Capabilities
+Process lineage reconstruction (parent → child chains)
 
-The pipeline identifies suspicious activity using lightweight behavioral heuristics, including:
+Living-off-the-Land Binary (LOLBin) detection
 
-- LOLBin abuse (PowerShell, certutil, mshta, wscript)
-- Suspicious parent-child process relationships
-- Command-line keyword analysis (encoded commands, URL downloads)
-- Multi-generation process lineage reconstruction
-- Heuristic risk scoring to prioritize analyst attention
-- MITRE ATT&CK technique mapping
+Office-spawned script execution (real phishing tradecraft)
 
----
+Risk scoring based on behavior, not signatures
 
-## Alerting & Slack Integration
+MITRE ATT&CK technique mapping
 
-To simulate a real SOC workflow, detections above a defined risk threshold generate **a single consolidated Slack alert per execution**.
+Case-based alerting and artifact generation
 
-This mirrors how analysts often receive actionable alerts through collaboration platforms rather than continuously monitoring dashboards.
+Automated analyst notifications via Slack
 
-Each alert includes:
-- Case ID and execution timestamp
-- Severity and risk score
-- Host and user context
-- MITRE ATT&CK techniques
-- Detection reasons
-- Full process execution chain
-- Recommended analyst actions
+This mirrors workflows found in platforms like:
 
-![Slack Alert Example](screenshots/slack_alert.png)
+CrowdStrike Falcon
 
----
+Microsoft Defender for Endpoint
 
-## Findings Summary
+SentinelOne
 
-During execution, the pipeline identified multiple high-confidence suspicious behaviors, including:
+Elastic Security
 
-- PowerShell execution launched from Microsoft Word with encoded command-line arguments, consistent with phishing attachment tradecraft
-- certutil usage to retrieve external resources over HTTP, indicative of ingress tool transfer
-- mshta execution spawned from scripting engines, a common signed binary proxy execution pattern
+🧰 Tools & Technologies Used
 
-Heuristic risk scoring successfully differentiated isolated LOLBin usage from multi-signal attack chains requiring analyst attention.
+Jupyter Notebook – interactive analysis and detection logic
 
----
+Python – data processing, scoring, alerting
 
-## MITRE ATT&CK Techniques Observed
+Pandas – event correlation and enrichment
 
-- **T1059.001** – Command and Scripting Interpreter: PowerShell  
-- **T1059.003** – Command and Scripting Interpreter: Windows Command Shell  
-- **T1105** – Ingress Tool Transfer  
-- **T1218.005** – Signed Binary Proxy Execution: Mshta  
-- **T1566.001** – Phishing Attachment  
+MITRE ATT&CK – behavioral technique mapping
 
----
+Slack Webhooks – automated analyst alerting
 
-## Output Artifacts
+CSV / JSON – case artifacts & reporting output
 
-The pipeline exports structured alert data in CSV and JSON formats to support analyst review, reporting, and incident documentation.
+🧪 Detection Pipeline (High-Level)
 
-Example artifacts are included for reference.
+Process Events Generated
 
----
+Simulated Windows process execution data
 
-## Why This Matters
+Process Lineage Reconstruction
 
-This project demonstrates how behavioral telemetry, process lineage, and heuristic scoring can approximate EDR-style detection logic without relying on signatures or heavyweight agents.
+Builds full parent-child chains (e.g.
+powershell.exe ← winword.exe ← explorer.exe)
 
-It reflects how detections are **built, evaluated, and communicated** in real-world blue team environments.
+Behavioral Detection
+
+LOLBins (PowerShell, certutil, mshta, wscript)
+
+Suspicious command-line flags (-enc, -nop, URLs)
+
+Office → script execution chains
+
+Risk Scoring
+
+Each event receives a weighted score
+
+Severity assigned (Low / Medium / High / Critical)
+
+MITRE ATT&CK Mapping
+
+Techniques inferred from behavior and chain context
+
+Case Creation
+
+Events grouped into case folders (CASE-001, CASE-002, …)
+
+Per-severity CSVs generated
+
+Executive summary written
+
+File hashes created (chain-of-custody style)
+
+Slack Alerting
+
+Top high-risk cases sent as a single Slack message
+
+One message per run (not noisy, not spammy)
+
+📁 Output Structure
+
+Each run produces structured case artifacts:
+
+EDR_Labs_Output/
+└── CASE-001/
+    ├── critical_alerts.csv
+    ├── high_alerts.csv
+    ├── medium_alerts.csv
+    ├── edr_alerts_all.csv
+    ├── edr_alerts.json
+    ├── summary.txt
+    └── hashes.txt
+
+
+This mirrors how real IR teams preserve evidence and document findings.
+
+🔔 Slack Alerting (For the “Busy Analyst”)
+
+This lab includes optional Slack automation.
+
+If an analyst defines a webhook:
+
+Any event scoring ≥ 70 triggers an alert
+
+Only the top 3 highest-risk cases are sent
+
+One clean message per run
+
+Each Slack alert includes:
+
+Case ID
+
+Severity
+
+Host + User
+
+Risk Score
+
+MITRE Techniques
+
+Key detections
+
+Full process chain
+
+Recommended actions
+
+This simulates how detection platforms reduce noise while still escalating real risk.
+
+📸 Screenshots
+
+Screenshots in this repository illustrate:
+
+Process lineage reconstruction
+
+MITRE ATT&CK mapping logic
+
+Risk score distribution
+
+Case artifact generation
+
+Slack alert output
+
+Screenshots are intentionally curated to demonstrate analyst-level visibility, not step-by-step instructions.
+
+(See /screenshots directory.)
+
+🎯 Why This Matters
+
+This project shows:
+
+You understand how EDR detections are built
+
+You can reason about behavior, not just tools
+
+You think in terms of cases, alerts, and response
+
+You can automate analyst workflows
+
+You can explain security concepts clearly
+
+This is the difference between:
+
+“I used an EDR”
+and
+“I understand how an EDR works.”
+
+🚀 Future Enhancements
+
+Planned or easily extendable:
+
+Rule tuning & false-positive suppression
+
+Time-window correlation
+
+ATT&CK tactic rollups
+
+Detection confidence scoring
+
+SOAR-style response hooks
